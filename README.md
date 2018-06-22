@@ -1,0 +1,2 @@
+# GLAM
+django project
