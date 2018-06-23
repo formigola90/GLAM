@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% regroup contacts_list by contact_type as type_list %}
+
+    
+    <p style="text-align: center;"><strong><span style="font-size:72px;">{{profile.user.username}}</span></strong></p>
+    
+    <p>Last Review: {{profile.last_review_timestamp}}</p>
+    
+    <p>Last contact added in date: {{profile.last_database_add}}</p>
+    
+    <p style="text-align: center;"><span style="font-size:28px;"><strong>LAST REVIEW:</strong></span></p>
+    
+    {% if last_review == "No reviews yet!" %}
+    
+        <p><span style="font-size:28px;">{{last_review}}</span></p>
+
+    {% else %}
+        
+        <p><span style="font-size:18px;">Date: <strong>{{last_review.time_stamp}}</strong></span></p>
+        <p><span style="font-size:28px;">Contact: <strong>{{last_review.contact}}</strong></span></p>
+        <p><span style="font-size:30px;">Rating: <strong>{{last_review.rating}}</strong></span></p>
+        <p><span style="font-size:20px;"> <strong>Review:</strong></span></p>
+        <p><span style="font-size:28px;">{{last_review.comment}}</span></p>
+        
+   {% endif %}
+    
+    <p style="text-align: center;"><span style="font-size:28px;"><strong>ADDED CONTACTS:</strong></span></p>
+
+       
+   {% for type in type_list %}
+      <h3>{{type.grouper}} </h3>
+      {% for contact in type.list %} 
+         <li><a href="{% url 'contacts:contact_detail' contact.slug %}"> {{ contact.name }} </a></li>
+      {%endfor%}
+   {% endfor %}
+
+
+{% endblock %}
+
+{% block menu %}
+
+<nav>
+    <ul>
+        <li><a href="http://www.colouredsweat.com">Our Band</a></li>
+        <li><a href="{% url 'contacts:add_contact' %}">Add Contact</a></li>
+        <li><a href="{% url 'contacts:contact_form' %}">Contacts Search</a></li>
+        <li><a class="aktiv">Your Profile</a></li>
+        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+        
+        
+    </ul>
+</nav>
+
+{% endblock %}

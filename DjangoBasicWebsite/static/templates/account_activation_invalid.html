@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% autoescape off %}
+
+The link that you clicked is old!
+
+Signup here:
+{% endautoescape %}
+
+<a href="{% url 'signup' %}">SIGNUP</a></li>   
+
+{% endblock %}
+
+{% block menu %}
+
+<nav>
+    <ul>
+        <li><a href="http://www.colouredsweat.com">Our Band</a></li>
+        <li><a href="{% url 'add_contact' %}">Add Contact</a></li>
+        <li><a href="{% url 'contact_form' %}">Contacts List</a></li>
+        <li><a href="gallery.html">Your Profile</a></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+    {% else %}
+        <li><a class="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+    {% endif %}
+        
+        
+    </ul>
+</nav>
+
+{% endblock %}

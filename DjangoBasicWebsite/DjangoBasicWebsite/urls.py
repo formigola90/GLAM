@@ -1,4 +1,4 @@
-"""DjangoBasicWebsite URL Configuration
+"""hello URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -13,9 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+import GLAM.core_views as core_views 
+
 
 urlpatterns = [
+    url(r'^contacts/', include('GLAM.urls', namespace='contacts')),
     url(r'^admin/', admin.site.urls),
+    url(r'^signup/$', core_views.signup, name='signup'),
+    url('accounts/', include('django.contrib.auth.urls')),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        core_views.activate, name='activate'),
 ]

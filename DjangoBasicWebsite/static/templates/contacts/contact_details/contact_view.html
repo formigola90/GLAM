@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block style %}
+
+<style type="text/css">
+
+    input[type="text"], 
+    input[type="password"],
+    input[type="email"] {
+    	display:block;
+    	width: 100%;
+    	height: 25px;
+    	margin-bottom: 15px;
+    }
+    	
+    input[type="submit"] {
+    	font-size: 14px;
+    	background-color: #f8f093;
+    	color: #000;
+    	padding: 8px 14px;
+    	border: none;
+    	margin: 10px 0 15px 0;
+    	border-radius: 2px;
+    }
+    
+    input[type="submit"]:hover {
+    	background-color: #8fa8a8;
+    }
+    
+    input[type="submit"]:active {
+    	background-color: #fff;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+    
+    <form>
+        <input type="button" value="Back to Search" onclick="history.back()">
+    </form>
+    <br>
+    
+    <p style="text-align: center;"><strong><span style="font-size:72px;">{{contact.name}}</span></strong></p>
+    
+    <p><span style="font-size:12px;">This contact was added thanks to the user: <a href="{% url 'contacts:user_profile' contact.created_by %}">{{contact.created_by}}</a></span></p>
+    
+    <p>CONTACT TYPE: {{contact.contact_type}}</p>
+    
+    <p>WEBSITE: <a href="{{contact.website}}" target='_blanc'>{{contact.website}}</a></p>
+    
+    {% if current_user.username == "formigola" %}
+    
+        <p>EMAIL: <a href="mailto:{{contact.email}}?subject=Music%20Proposal&amp;body=Hello!%0A%0AWe%20are%20the%20Coloured%20Sweat%2C%20an%20independent%20rock%20band%20from%20Italy.%20We%20just%20published%20our%20new%20album%20Greatest%20Hits%20and%20we%20are%20planning%20to%20promote%20it%20with%20a%20tour%20in%20Croatia%20this%20summer.%20That's%20why%20we%20would%20like%20to%20pass%20some%20of%20our%20songs%20on%20Croatian%20radios.%20Are%20you%20interested%20in%20putting%20on%20air%20some%20of%20them%20on%20{{contact.name}}%20%3F%20This%20is%20the%20link%20to%20our%20website%3A%0A%0Awww.colouredsweat.com%0A%0AThanks%20for%20your%20attention!%0ASincerely%2C%0AThe%20Coloured%20Sweat">{{contact.email}}</a></p> 
+    
+    {% else %}
+    
+        <p>EMAIL: <a href="mailto:{{contact.email}}">{{contact.email}}</a></p>
+    
+    {% endif %}
+    
+    <p>ADDRESS: <strong>{{contact.nation}}</strong>, {{contact.region}}, {{contact.address}}</p>
+    
+    
+    <img height="250" width="500" src=https://maps.googleapis.com/maps/api/staticmap?center={{ contact.address.split|join:"+" }},{{ contact.region }},{{ contact.nation }}&zoom=9&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C{{ contact.address.split|join:"+" }},{{ contact.region }},{{ contact.nation }}&key=AIzaSyDbYbm2sclCgFyFMSGAMfe6TLFLrvNJ1qw></img>
+    
+    <br><br>
+    
+    <form>
+        <input type="button" value="Back to Search" onclick="history.back()">
+    </form>
+    
+    
+    <p><span style="font-size:28px;"><strong>Leave your review and make the artists live better:</strong></span></p>
+    
+    <form action="{% url 'contacts:contact_detail' contact.slug %}" method='post'>{% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' value='Submit' />
+    </form>
+    
+    <p style="text-align: center;"><span style="font-size:28px;"><strong>REVIEWS</strong></span></p>
+
+    {% for review in reviews_list %}
+    <p><span style="font-size:18px;">Date: <strong>{{review.time_stamp}}</strong></span></p>
+    <p><span style="font-size:28px;">User: <strong>{{review.created_by}}</strong></span></p>
+    <p><span style="font-size:30px;">Rating: <strong>{{review.rating}}</strong></span></p>
+    <p><span style="font-size:20px;"> <strong>Review:</strong></span></p>
+    <p><span style="font-size:28px;">{{review.comment}}</span></p>
+    <p><span style="font-size:28px;"><strong>--+++--</strong></span></p>
+    {% endfor %}
+
+
+{% endblock %}
+
+{% block menu %}
+
+<nav>
+    <ul>
+        <li><a href="http://www.colouredsweat.com">Our Band</a></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'contacts:add_contact' %}">Add Contact</a></li>
+        <li><a href="{% url 'contacts:contact_form' %}">Contacts Search</a></li>
+        <li><a href="{% url 'contacts:user_profile' current_user.username %}">Your Profile</a></li>
+        <li><a href="{% url 'logout'%}">Logout</a></li>
+    {% endif %}
+        
+        
+    </ul>
+</nav>
+
+{% endblock %}

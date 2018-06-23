@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+{% load static %}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="author" content="Jakob Jugovic">
+        <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0">
+        <link href="{% static "/css/coloured.css" %}" rel="stylesheet" type="text/css" />
+        <link rel="icon" href="slikce/favicon.png" type="image/ico">
+        <title>Coloured Sweat - Base</title>
+        {% block style %}
+        {% endblock %}
+    </head>
+
+
+    <body>
+    
+        <div class="slwn">
+            
+            <img src="{% static '/slikce/coloured_logo_2017.png' %}" width="100%"/></div>
+            
+            <div id="container">
+            
+            {% block menu %}
+            {% endblock %}
+            
+            <div id="content" class="glazba">
+            
+            
+            
+            {% block content %}
+            {% endblock %}
+            
+            
+            </div>
+        
+        </div>
+    </body>
+</html>

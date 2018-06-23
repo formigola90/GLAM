@@ -1,0 +1,46 @@
+
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="{% url 'contacts:send_to_list' %}" method="post">
+{% csrf_token %}
+
+{% for contact in list %}
+<input type="checkbox" name="contact" value="{{contact.slug}}" checked> <a href="{% url 'contacts:contact_detail' contact.slug %}"> {{ contact.name }} </a> //
+<a href="mailto:{{contact.email}}">Send email to {{contact.name}}</a> <br>
+{% endfor %}
+
+
+{% if perms.admin %}
+
+<input type="submit" value="Send to list">
+
+{% endif %}
+</form>
+
+{% endblock %}
+
+{% block menu %}
+
+<nav>
+    <ul>
+        <li><a href="http://www.colouredsweat.com">Our Band</a></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'contacts:add_contact' %}">Add Contact</a></li>
+        <li><a href="{% url 'contacts:contact_form' %}">Contacts List</a></li>
+        <li><a href="{% url 'contacts:user_profile' current_user.username %}">Your Profile</a></li>
+        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+    {% else %}
+        <li><a class="aktiv">Login</a></li>
+        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+    {% endif %}
+        
+        
+    </ul>
+</nav>
+
+{% endblock %}
+
+

@@ -1,0 +1,63 @@
+
+{% extends "base.html" %}
+
+
+{% block content %}
+
+  <h1>Contacts App</h1> 
+  
+  <p>Welcome to our comunity!</p>
+  <p></p>
+  <p>Now that you are a part of it, remember that a community works only if everybody helps. That's your responsibility!</p>
+  <p></p>
+  <a href="{% url 'contacts:contact_form'  %}">SEARCH IN THE DATABASE</a>
+  <p></p>
+  <a href="{% url 'contacts:add_contact' %}">ADD A NEW CONTACT</a>
+  <p></p>
+  <p>We are the Coloured Sweat, a rock band from Italy. We started our activity in 2010 and since then we experienced the problem of the "making money with music".
+  We believe that some money is necessary to maintain any artistic activity not just the commercial ones. That’s why we developed this app and now we are trying 
+  to build a community around it.</p>
+  <p></p>
+  <p>We believe that the easy-est way of getting some money from our musician-sheep, especially at the emerging level, is to play a lot of gigs and start to build a
+  net of relationships with others in the field. This is easy to say, but like the most of the things of this kind, very hard to do in practice.</p>
+  <p></p>
+  <p>In the past we spent a lot of time (probably still not enough) searching on the web for new contacts, new venues where to play, new radios where to present our 
+  work, and so on. We noticed that just a little amount of peoples that we contacted were interested in what we were doing, as it happens for everybody that is not 
+  famous. So we started to think that is necessary to have a really huge amount of contacts if we want to find the people that want an can help us. Our singer started 
+  to think about a database of contacts and to develop it. After a while started to came out the idea:</p>
+  <p></p>
+  <p> Why not to share our contacts with others? If I have 20 contacts and another guy has other 20, if we put it together we have both 40! It means that booth of us
+  has doubled their possibility to find the right people to develop their artistic career!</p>
+  <p></p>
+  <p>So there we are: We put on our web-site this app were you can share your contacts, access a huge database of them and with few clicks simply email them. We believe
+  that this can help a lot. But that's not all: you can rate the contacts from the database! For example if a venue is not honest and don't pay what they promise you can
+  leave a negative feedback! And you can leave a positive one in the case of a good contact. This is also very useful we think.</p>
+  <p></p>
+  <p>And remember, now you are a part of a community and a community works just if everybody helps. That's your responsibility!</p>
+  <p></p>
+  
+  <a href="{% url 'contacts:contact_form'  %}">SEARCH IN THE DATABASE</a>
+  <p></p>
+  <a href="{% url 'contacts:add_contact'  %}">ADD A NEW CONTACT</a>
+
+{% endblock %}
+
+{% block menu %}
+<nav>
+    <ul>
+        <li><a href="http://www.colouredsweat.com">Our Band</a></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'contacts:add_contact' %}">Add Contact</a></li>
+        <li><a href="{% url 'contacts:contact_form' %}">Contacts List</a></li>
+        <li><a href="{% url 'contacts:user_profile' current_user.username %}">Your Profile</a></li>
+        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+    {% else %}
+        <li><a herf="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+    {% endif %}
+        
+        
+    </ul>
+</nav>
+
+{% endblock %}

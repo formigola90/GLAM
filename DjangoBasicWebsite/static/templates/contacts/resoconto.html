@@ -1,0 +1,8 @@
+
+<br>
+<h1> The email was sended to the following contacts: </h1>
+
+{% for contact in contacts %}
+     <h3>{{ contact.name }} <h5>[{{contact.email}}]</h5></h3> 
+     
+{% endfor %}
