@@ -118,4 +118,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+STATICFILES_DIRS = ['/home/formigola/Scrivania/Coloured_Sweat/GLAM/DjangoBasicWebsite/static/']
 STATIC_URL = '/static/'
+TEMPLATES = [{'APP_DIRS': True,
+	  'BACKEND': 'django.template.backends.django.DjangoTemplates',
+	  'DIRS': ['/home/formigola/Scrivania/Coloured_Sweat/GLAM/DjangoBasicWebsite/static/templates',
+			],
+	  'OPTIONS': {'context_processors': ['django.template.context_processors.debug',
+			                     'django.template.context_processors.request',
+			                     'django.contrib.auth.context_processors.auth',
+			   			'django.contrib.messages.context_processors.messages']}}]
+
+# Login redirect
+# after the login the user is redirected to the contacts app
+# see tutorial https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication
+
+LOGIN_REDIRECT_URL = '/colswe2/contacts/'
+LOGIN_URL = '/colswe2/accounts/login/'
